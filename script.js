@@ -7,8 +7,12 @@ function subtract(a,b){
     return a-b;
 }
 function divide(a,b){
+    if (b == 0) {
+        alert(`ERROR: Cannot divide by zero. Cosmic implosion imminent.`);
+    }
+    else {
     console.log(a/b);
-    return a/b;
+    return a/b;}
 }
 function multiply(a,b){
     console.log(a*b);
@@ -29,8 +33,3 @@ function operate(a,b,operator){
         multiply(a,b);
     }
 }
-
-operate(1,2,"+");
-operate(2,2,"-");
-operate(4,2,"/");
-operate(5,5,"*");
