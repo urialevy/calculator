@@ -88,7 +88,8 @@ button:-webkit-details-marker {
     display: flex;
     border-style: solid;
     flex-direction: column;
-    background-color: lightgrey;;
+    background-color: lightgrey;
+    border-radius: 10px;
 }
 
 #topbtns {
