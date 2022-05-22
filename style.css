@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    width: fit-content;
+    flex-direction: column; 
+    margin-left: 20%;
+    align-items: center;
+
+
+}
+
+#calculatorGrid {
+    display: inline-grid;
+    padding: 10px;
+    border-style: solid;
+    padding: 0;
+    border-radius: 5px;
+    width: 500px;
+    height: 500px;
+    grid-template-columns: repeat(4,1fr);
+}
