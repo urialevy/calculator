@@ -119,10 +119,10 @@ button:-webkit-details-marker {
     text-align: right;
 }
 
-#clear {
+#delete {
     background-color: lightblue;
 }
 
-#delete {
+#clear {
     background-color:tomato;
 }
