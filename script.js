@@ -8,7 +8,7 @@ const clearButton = document.querySelector('#clear')
 const deleteButton = document.querySelector('#delete');
 var displayValue = document.getElementById('result');
 displayValue.innerHTML = '0';
-
+let blankDisplay = true;
 
 
 //capture keystrokes and presses, update display
@@ -16,7 +16,13 @@ document.addEventListener('keydown', populateNum);
 
 function populateNum(n){
     if (n.key >= 0 && n.key <= 9){
-    displayValue.textContent += n.key;
+        if(blankDisplay) {
+            displayValue.innerHTML="";
+            displayValue.textContent += n.key;
+            blankDisplay = false;            
+        }
+        else {
+    displayValue.textContent += n.key;}
 }};
 
 
@@ -25,6 +31,7 @@ clearButton.addEventListener('click', resetDisplay)
 
 function resetDisplay(){
     displayValue.innerHTML="0";
+    blankDisplay = true;
 }
 
 
