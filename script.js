@@ -1,16 +1,32 @@
 // defines buttons, sets up initial display value of 0
 
-const displayValue = document.querySelector('#result');
-displayValue.innerHTML="<p>0</p>";
-const clearButton = document.querySelector('#clear')
-const deleteButton = document.querySelector('#delete');
+
 const numButtons = document.querySelectorAll('.num');
 const operatorButtons = document.querySelectorAll('.operator');
 const returnButton = document.querySelector('#finish');
+const clearButton = document.querySelector('#clear')
+const deleteButton = document.querySelector('#delete');
+var displayValue = document.getElementById('result');
+displayValue.innerHTML = '0';
+
+
 
 //capture keystrokes and presses, update display
-var number = number.addEventListener('keydown');
+document.addEventListener('keydown', populateNum);
+
+function populateNum(n){
+    if (n.key >= 0 && n.key <= 9 || n.key == "." ){
+    displayValue.textContent += n.key;
+}};
+
+
 //clear and delete buttons
+clearButton.addEventListener('click', resetDisplay)
+
+function resetDisplay(){
+    displayValue.innerHTML="";
+}
+
 
 // Calculator functions, does not allow to divide by zero.
 function add(a,b){
