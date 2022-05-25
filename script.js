@@ -15,7 +15,7 @@ displayValue.innerHTML = '0';
 document.addEventListener('keydown', populateNum);
 
 function populateNum(n){
-    if (n.key >= 0 && n.key <= 9 || n.key == "." ){
+    if (n.key >= 0 && n.key <= 9){
     displayValue.textContent += n.key;
 }};
 
@@ -24,7 +24,7 @@ function populateNum(n){
 clearButton.addEventListener('click', resetDisplay)
 
 function resetDisplay(){
-    displayValue.innerHTML="";
+    displayValue.innerHTML="0";
 }
 
 
