@@ -1,14 +1,17 @@
 // defines buttons, sets up initial display value of 0
+let blankDisplay = true;
+let firstOp = "";
+let secondOp = "";
+let currentOp = null;
 
 const numButtons = document.querySelectorAll(".num");
 const operatorButtons = document.querySelectorAll(".operator");
 const returnButton = document.querySelector("#finish");
-const clearButton = document.querySelector("#clear");
-const deleteButton = document.querySelector("#delete");
+const clearButton = document.getElementById("clear");
+const deleteButton = document.getElementById("delete");
 var displayValue = document.getElementById("result");
 displayValue.textContent = "0";
 let previousValue = document.getElementById("previous");
-var displayBlank = true;
 
 //capture keystrokes and presses, update display
 window.addEventListener("keydown", input);
@@ -23,10 +26,10 @@ function input(e) {
 }
 function populateNum(n) {
   {
-    if ((displayBlank = true)) {
+    if (blankDisplay) {
       displayValue.innerHTML = "";
       displayValue.textContent += n;
-      displayBlank = false;
+      blankDisplay = false;
     } else {
       displayValue.textContent += n;
     }
@@ -34,17 +37,19 @@ function populateNum(n) {
 }
 
 //clear and delete buttons
-clearButton.addEventListener("click", reset());
+clearButton.addEventListener("click", reset);
+deleteButton.addEventListener("click", deleteNumber);
 
-function clearDisplay() {
+function resetDisplay() {
   displayValue.innerHTML = "0";
-  displayBlank = true;
+  blankDisplay = true;
 }
 function reset() {
   displayValue.innerHTML = "0";
   previousValue.innerHTML = "";
-  displayBlank = true;
+  blankDisplay = true;
 }
+
 function deleteNumber() {
   displayValue.textContent = displayValue.textContent.toString().slice(0, -1);
 }
@@ -54,7 +59,7 @@ function startOperate(operator) {
   firstOp = displayValue.textContent;
   currentOp = operator;
   previousValue.textContent = `${firstOp} ${currentOp}`;
-  clearDisplay();
+  resetDisplay();
 }
 
 //
