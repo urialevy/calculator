@@ -1,42 +1,44 @@
 <!DOCTYPE html>
-<head>    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script></head>
-    <title>Calculator</title>
+<head>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<title>Calculator</title>
 <body>
-    <div class="container">
-        <h1>Calculator</h1>
-        <div id="calc">
-            <div id="display">
-                <div><p id="previous">1</p></div>
+  <div class="container">
+    <h1>Calculator</h1>
+    <div id="calc">
+      <div id="display">
+        <div><p id="previous"></p></div>
         <div id="resultDiv"><p id="result"></p></div>
-    </div>
-        <div id="topbtns">
-            <button id="clear">CLEAR</button>
-            <button id="delete">DELETE</button>
-        </div>
-        <div id="calculatorGrid">
-            <button class="num" data-key="55">7</button>
-            <button class="num"data-key="56">8</button>
-            <button class="num" data-key="57">9</button>
-            <button class="operator" data-key="191">÷</button>
-            <button class="num" data-key="52">4</button>
-            <button class="num" data-key="53">5</button>
-            <button class="num" data-key="54">6</button>
-            <button class="operator" data-key="106">x</button>
-            <button class="num" data-key="49">1</button>
-            <button class="num" data-key="50">2</button>
-            <button class="num" data-key="51">3</button>
-            <button class="operator" data-="109">-</button>
-            <button class="num" data-key="190">.</button>
-            <button class="num" data-key="48">0</button>
-            <button id="finish" data-key="13" data-key="61">=</button>
-            <button class="operator" data-key="107">+</button>
-        </div>
+      </div>
+      <div id="topbtns">
+        <button id="clear">CLEAR</button>
+        <button id="delete">DELETE</button>
+      </div>
+      <div id="calculatorGrid">
+        <button class="num" data-key="55">7</button>
+        <button class="num" data-key="56">8</button>
+        <button class="num" data-key="57">9</button>
+        <button class="operator" data-key="191">÷</button>
+        <button class="num" data-key="52">4</button>
+        <button class="num" data-key="53">5</button>
+        <button class="num" data-key="54">6</button>
+        <button class="operator" data-key="106">x</button>
+        <button class="num" data-key="49">1</button>
+        <button class="num" data-key="50">2</button>
+        <button class="num" data-key="51">3</button>
+        <button class="operator" data-="109">-</button>
+        <button class="num" data-key="190">.</button>
+        <button class="num" data-key="48">0</button>
+        <button id="finish" data-key="13" data-key="61">=</button>
+        <button class="operator" data-key="107">+</button>
+      </div>
     </div>
     <div>
-    <script>
+      <script>
         document.write(new Date().getFullYear());
-    </script>
+      </script>
     </div>
-</div>
+  </div>
 </body>
