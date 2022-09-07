@@ -13,7 +13,7 @@ var displayValue = document.getElementById("result");
 displayValue.textContent = "0";
 let previousValue = document.getElementById("previous");
 
-//capture keystrokes and presses, update display
+//Capture keystrokes and presses, update display
 window.addEventListener("keydown", input);
 
 function input(e) {
