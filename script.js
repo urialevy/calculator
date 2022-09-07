@@ -27,16 +27,14 @@ function input(e) {
 function populateNum(n) {
   {
     if (blankDisplay) {
-      displayValue.innerHTML = "";
-      displayValue.textContent += n;
+      displayValue.textContent = "";
+      firstOp += n;
       blankDisplay = false;
-    } else if (firstOp !== null) {
-      displayValue.textContent += n;
-      secondOp = displayValue.textContent;
     } else {
-      displayValue.textContent += n;
+      firstOp += n;
     }
   }
+  displayValue.textContent = firstOp;
 }
 
 //clear and delete buttons
@@ -44,28 +42,34 @@ clearButton.addEventListener("click", reset);
 deleteButton.addEventListener("click", deleteNumber);
 
 function resetDisplay() {
-  displayValue.innerHTML = "0";
+  firstOp = "";
   blankDisplay = true;
 }
 function reset() {
-  displayValue.innerHTML = "0";
-  previousValue.innerHTML = "";
+  displayValue.textContent = "0";
+  previousValue.textContent = "";
   blankDisplay = true;
-  firstOp = 0;
+  firstOp = "";
   secondOp = "";
   currentOp = null;
 }
 
 function deleteNumber() {
-  displayValue.textContent = displayValue.textContent.toString().slice(0, -1);
+  firstOp = firstOp.toString().slice(0, -1);
+  displayValue.textContent = firstOp;
 }
 
 // stores values once non-enter operator key is pressed
 function startOperate(operator) {
-  firstOp = displayValue.textContent;
+  displayValue.textContent = firstOp;
   currentOp = operator;
   previousValue.textContent = `${firstOp} ${currentOp}`;
+  secondOp = previousValue.textContent.toString().slice(0, -2);
   resetDisplay();
+  if (firstOp !== null && secondOp !== null) {
+    eval();
+    resetDisplay();
+  }
 }
 
 // Actual calculator functions that brings all the inputs together
@@ -79,24 +83,20 @@ returnButton.addEventListener("click", eval);
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
-  console.log(a + b);
-  displayValue.innerHTML = a + b;
+  displayValue.textContent = a + b;
 }
 function subtract(a, b) {
-  console.log(a - b);
-  displayValue.innerHTML = a - b;
+  displayValue.textContent = a - b;
 }
 function divide(a, b) {
   if (b == 0) {
-    alert(`ERROR: Cannot divide by zero. Cosmic implosion imminent.`);
+    alert(`ERROR: Cannot divide by zero.`);
   } else {
-    console.log(a / b);
-    displayValue.innerHTML = a / b;
+    displayValue.textContent = a / b;
   }
 }
 function multiply(a, b) {
-  console.log(a * b);
-  displayValue.innerHTML = a * b;
+  displayValue.textContent = a * b;
 }
 //detects the operator and adds/subtracts
 function operate(operator, a, b) {
@@ -111,5 +111,4 @@ function operate(operator, a, b) {
   } else if (operator == "*") {
     multiply(a, b);
   }
-  currentOp = null;
 }
