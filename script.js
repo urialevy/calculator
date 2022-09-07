@@ -7,15 +7,15 @@ const clearButton = document.querySelector("#clear");
 const deleteButton = document.querySelector("#delete");
 var displayValue = document.getElementById("result");
 displayValue.textContent = "0";
-let blankDisplay = true;
 let previousValue = document.getElementById("previous");
+var displayBlank = true;
 
 //capture keystrokes and presses, update display
 window.addEventListener("keydown", input);
 
 function input(e) {
   if (e.key >= 0 && e.key <= 9) populateNum(e.key);
-  if (e.key === "Escape") resetDisplay();
+  if (e.key === "Escape") reset();
   if (e.key === "Backspace") deleteNumber();
   if (e.key === "=" || e.key === "Enter") calculate();
   if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
@@ -23,10 +23,10 @@ function input(e) {
 }
 function populateNum(n) {
   {
-    if (blankDisplay) {
+    if ((displayBlank = true)) {
       displayValue.innerHTML = "";
       displayValue.textContent += n;
-      blankDisplay = false;
+      displayBlank = false;
     } else {
       displayValue.textContent += n;
     }
@@ -34,18 +34,30 @@ function populateNum(n) {
 }
 
 //clear and delete buttons
-clearButton.addEventListener("click", resetDisplay);
+clearButton.addEventListener("click", reset());
 
-function resetDisplay() {
+function clearDisplay() {
   displayValue.innerHTML = "0";
-  blankDisplay = true;
+  displayBlank = true;
+}
+function reset() {
+  displayValue.innerHTML = "0";
+  previousValue.innerHTML = "";
+  displayBlank = true;
 }
 function deleteNumber() {
   displayValue.textContent = displayValue.textContent.toString().slice(0, -1);
 }
 
 // stores values once non-enter operator key is pressed
-function startOperate(o) {}
+function startOperate(operator) {
+  firstOp = displayValue.textContent;
+  currentOp = operator;
+  previousValue.textContent = `${firstOp} ${currentOp}`;
+  clearDisplay();
+}
+
+//
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {

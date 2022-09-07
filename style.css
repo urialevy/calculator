@@ -1,30 +1,30 @@
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serifq;
+  font-family: Verdana, Geneva, Tahoma, sans-serifq;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    width: fit-content;
-    flex-direction: column; 
-    margin-left: 20%;
-    align-items: center;
-
-
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  width: fit-content;
+  flex-direction: column;
+  margin-left: 20%;
+  align-items: center;
 }
 button {
-    margin-top:20px;
-    appearance: none;
-  background-color: #FAFBFC;
+  margin-top: 20px;
+  appearance: none;
+  background-color: #fafbfc;
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
   box-sizing: border-box;
-  color: #24292E;
-  cursor:pointer;
+  color: #24292e;
+  cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 20px;
   font-weight: 500;
   line-height: 20px;
@@ -33,108 +33,107 @@ button {
   transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
   user-select: none;
   -webkit-user-select: none;
-  touch-action:manipulation;
+  touch-action: manipulation;
   vertical-align: middle;
   white-space: nowrap;
-  word-wrap:break-word;
+  word-wrap: break-word;
 }
 
 button:hover {
-    background-color: #F3F4F6;
+  background-color: #f3f4f6;
   text-decoration: none;
   transition-duration: 0.1s;
 }
 
 button:disabled {
-background-color: #FAFBFC;
+  background-color: #fafbfc;
   border-color: rgba(27, 31, 35, 0.15);
-  color: #959DA5;
+  color: #959da5;
   cursor: default;
 }
 
-button:active{
-    background-color: #EDEFF2;
-    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
-    transition: none 0s;
+button:active {
+  background-color: #edeff2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
 }
 
-button:focus{
-    outline: 1px transparent;
+button:focus {
+  outline: 1px transparent;
 }
 
 button:before {
-    display:none;
+  display: none;
 }
 
 button:-webkit-details-marker {
-    display:none;
+  display: none;
 }
 #calculatorGrid {
-    display: inline-grid;
-    padding: 10px;
-    width: 500px;
-    height: 500px;
-    grid-template-columns: repeat(4,1fr);
+  display: inline-grid;
+  padding: 10px;
+  width: 500px;
+  height: 500px;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 #calculatorGrid button {
-    padding: 20px;
-    margin: 10px;
+  padding: 20px;
+  margin: 10px;
 }
 
 #calc {
-    border-radius: 5px;
-    width:fit-content;
-    display: flex;
-    border-style: solid;
-    flex-direction: column;
-    background-color: lightgrey;
-    border-radius: 10px;
+  border-radius: 5px;
+  width: fit-content;
+  display: flex;
+  border-style: solid;
+  flex-direction: column;
+  background-color: lightgrey;
+  border-radius: 10px;
 }
 
 #topbtns {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 #display {
-    display:flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    background-color: #959DA5;
-    width: 450px;
-    height: 100px;
-    margin-top: 20px;
-    margin-left: 20px;
-    border-radius: 5px;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #959da5;
+  width: 450px;
+  height: 100px;
+  margin-top: 20px;
+  margin-left: 20px;
+  border-radius: 5px;
 }
 
 #topbtns button {
-    width:40%;
+  width: 40%;
 }
 
 #resultDiv {
-    font-family: Arial, Helvetica, sans-serif;
-    vertical-align: auto;
-    font-size: x-large;
-    text-align: right;
-    margin-right: 20px;
-    margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  vertical-align: auto;
+  font-size: x-large;
+  text-align: right;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 #previous {
-    font-family: Arial, Helvetica, sans-serif;
-    vertical-align: auto;
-    font-size: large;
-    text-align: left;
-    padding-top: 20px;
-    padding-left: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  vertical-align: auto;
+  font-size: large;
+  text-align: left;
+  padding-top: 20px;
+  padding-left: 20px;
 }
 
 #delete {
-    background-color: lightblue;
+  background-color: lightblue;
 }
 
 #clear {
-    background-color:tomato;
+  background-color: tomato;
 }
