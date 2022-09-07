@@ -43,10 +43,11 @@ deleteButton.addEventListener("click", deleteNumber);
 
 function resetDisplay() {
   firstOp = "";
+  displayValue.textContent = "";
   blankDisplay = true;
 }
 function reset() {
-  displayValue.textContent = "0";
+  displayValue.textContent = "";
   previousValue.textContent = "";
   blankDisplay = true;
   firstOp = "";
@@ -61,42 +62,48 @@ function deleteNumber() {
 
 // stores values once non-enter operator key is pressed
 function startOperate(operator) {
-  displayValue.textContent = firstOp;
-  currentOp = operator;
-  previousValue.textContent = `${firstOp} ${currentOp}`;
-  secondOp = previousValue.textContent.toString().slice(0, -2);
-  resetDisplay();
-  if (firstOp !== null && secondOp !== null) {
-    eval();
+  if (firstOp == null || secondOp == null) {
+    displayValue.textContent = firstOp;
+    currentOp = operator;
+    previousValue.textContent = `${firstOp} ${currentOp}`;
     resetDisplay();
+    secondOp = previousValue.textContent.toString().slice(0, -2);
+  } else {
+    displayValue.textContent = firstOp;
+    currentOp = operator;
+    previousValue.textContent = `${firstOp} ${currentOp}`;
+    secondOp = previousValue.textContent.toString().slice(0, -2);
+    operate(currentOp, firstOp, secondOp);
+    firstOp = 0;
+    displayValue.textContent = "";
   }
 }
 
 // Actual calculator functions that brings all the inputs together
 function eval() {
-  if (currentOp != null) {
-    operate(currentOp, firstOp, secondOp);
-  }
+  operate(currentOp, firstOp, secondOp);
 }
-
-returnButton.addEventListener("click", eval);
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
   displayValue.textContent = a + b;
+  firstOp = a + b;
 }
 function subtract(a, b) {
   displayValue.textContent = a - b;
+  firstOp = a - b;
 }
 function divide(a, b) {
   if (b == 0) {
     alert(`ERROR: Cannot divide by zero.`);
   } else {
     displayValue.textContent = a / b;
+    firstOp = a / b;
   }
 }
 function multiply(a, b) {
   displayValue.textContent = a * b;
+  firstOp = a * b;
 }
 //detects the operator and adds/subtracts
 function operate(operator, a, b) {
