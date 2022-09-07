@@ -20,7 +20,7 @@ function input(e) {
   if (e.key >= 0 && e.key <= 9) populateNum(e.key);
   if (e.key === "Escape") reset();
   if (e.key === "Backspace") deleteNumber();
-  if (e.key === "=" || e.key === "Enter") calculate();
+  if (e.key === "=" || e.key === "Enter") eval();
   if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
     startOperate(e.key);
 }
@@ -69,32 +69,39 @@ function startOperate(operator) {
 }
 
 // Actual calculator functions that brings all the inputs together
+function eval() {
+  if (currentOp != null) {
+    operate(currentOp, firstOp, secondOp);
+  }
+}
 
-returnButton.addEventListener("click", calculate);
+returnButton.addEventListener("click", eval);
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
   console.log(a + b);
-  return a + b;
+  displayValue.innerHTML = a + b;
 }
 function subtract(a, b) {
   console.log(a - b);
-  return a - b;
+  displayValue.innerHTML = a - b;
 }
 function divide(a, b) {
   if (b == 0) {
     alert(`ERROR: Cannot divide by zero. Cosmic implosion imminent.`);
   } else {
     console.log(a / b);
-    return a / b;
+    displayValue.innerHTML = a / b;
   }
 }
 function multiply(a, b) {
   console.log(a * b);
-  return a * b;
+  displayValue.innerHTML = a * b;
 }
 //detects the operator and adds/subtracts
-function operate(a, b, operator) {
+function operate(operator, a, b) {
+  a = Number(a);
+  b = Number(b);
   if (operator == "+") {
     add(a, b);
   } else if (operator == "-") {
@@ -104,4 +111,5 @@ function operate(a, b, operator) {
   } else if (operator == "*") {
     multiply(a, b);
   }
+  currentOp = null;
 }
