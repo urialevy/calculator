@@ -72,8 +72,6 @@ function startOperate(operator) {
 
 returnButton.addEventListener("click", calculate);
 
-function calculate(firstOp, currentOp, secondOp) {}
-
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
   console.log(a + b);
