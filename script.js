@@ -51,6 +51,9 @@ function reset() {
   displayValue.innerHTML = "0";
   previousValue.innerHTML = "";
   blankDisplay = true;
+  firstOp = 0;
+  secondOp = "";
+  currentOp = null;
 }
 
 function deleteNumber() {
@@ -69,7 +72,7 @@ function startOperate(operator) {
 
 returnButton.addEventListener("click", calculate);
 
-function calculate() {}
+function calculate(firstOp, currentOp, secondOp) {}
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
