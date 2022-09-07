@@ -6,7 +6,7 @@ let currentOp = null;
 
 const numButtons = document.querySelectorAll(".num");
 const operatorButtons = document.querySelectorAll(".operator");
-const returnButton = document.querySelector("#finish");
+const returnButton = document.getElementById("finish");
 const clearButton = document.getElementById("clear");
 const deleteButton = document.getElementById("delete");
 var displayValue = document.getElementById("result");
@@ -30,6 +30,9 @@ function populateNum(n) {
       displayValue.innerHTML = "";
       displayValue.textContent += n;
       blankDisplay = false;
+    } else if (firstOp !== null) {
+      displayValue.textContent += n;
+      secondOp = displayValue.textContent;
     } else {
       displayValue.textContent += n;
     }
@@ -62,7 +65,11 @@ function startOperate(operator) {
   resetDisplay();
 }
 
-//
+// Actual calculator functions that brings all the inputs together
+
+returnButton.addEventListener("click", calculate);
+
+function calculate() {}
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
