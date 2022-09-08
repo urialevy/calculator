@@ -1,8 +1,9 @@
 // defines buttons, sets up initial display value of 0
-let shouldClearDisplay = true;
-let firstOp = "";
-let secondOp = "";
-let currentOp = null;
+let shouldClearDisplay = false;
+let firstOperand = "";
+let secondOperand = "";
+let memory = "";
+let currentOperation = null;
 
 const numButtons = document.querySelectorAll(".num");
 const operatorButtons = document.querySelectorAll(".operator");
@@ -10,8 +11,8 @@ const returnButton = document.getElementById("finish");
 const clearButton = document.getElementById("clear");
 const deleteButton = document.getElementById("delete");
 var displayValue = document.getElementById("result");
-displayValue.textContent = "0";
 let previousValue = document.getElementById("previous");
+displayValue.textContent = firstOperand;
 
 //Capture keystrokes and presses, update display
 window.addEventListener("keydown", input);
@@ -20,92 +21,104 @@ function input(e) {
   if (e.key >= 0 && e.key <= 9) populateNum(e.key);
   if (e.key === "Escape") reset();
   if (e.key === "Backspace") deleteNumber();
-  if (e.key === "=" || e.key === "Enter") eval();
+  if (e.key === "=" || e.key === "Enter")
+    operate(currentOperation, secondOperand, firstOperand);
   if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
     startOperate(e.key);
 }
+
+// updates number display when input is registered
 function populateNum(n) {
-  {
-    if (shouldClearDisplay) {
-      resetDisplay();
-      firstOp += n;
-      shouldClearDisplay = false;
-    } else {
-      firstOp += n;
-    }
+  if (displayValue.textContent == "0" || shouldClearDisplay) {
+    resetDisplay();
+    firstOperand += n;
+    displayValue.textContent = firstOperand;
+  } else {
+    firstOperand += n;
+    displayValue.textContent = firstOperand;
   }
-  displayValue.textContent = firstOp;
 }
 
 //clear and delete buttons
 clearButton.addEventListener("click", reset);
 deleteButton.addEventListener("click", deleteNumber);
 
-function resetDisplay() {
-  firstOp = "";
-  displayValue.textContent = "";
-  shouldClearDisplay = false;
-}
 function reset() {
   displayValue.textContent = "";
   previousValue.textContent = "";
   shouldClearDisplay = false;
-  firstOp = "";
-  secondOp = "";
-  currentOp = null;
+  firstOperand = "";
+  secondOperand = "";
+  memory = "";
+  currentOperation = null;
 }
 
 function deleteNumber() {
-  firstOp = firstOp.toString().slice(0, -1);
-  displayValue.textContent = firstOp;
+  firstOperand = firstOperand.toString().slice(0, -1);
+  displayValue.textContent = firstOperand;
+}
+
+// only resets the display
+function resetDisplay() {
+  firstOperand = "";
+  displayValue.textContent = "";
+  shouldClearDisplay = false;
 }
 
 // stores values once non-enter operator key is pressed
 function startOperate(operator) {
-  if (firstOp == null || secondOp == null) {
-    displayValue.textContent = firstOp;
-    currentOp = operator;
-    previousValue.textContent = `${firstOp} ${currentOp}`;
+  if (secondOperand === "") {
+    displayValue.textContent = firstOperand;
+    secondOperand = firstOperand;
+    currentOperation = operator;
+    memory = firstOperand;
+    previousValue.textContent = `${firstOperand} ${currentOperation}`;
+    shouldClearDisplay = true;
     resetDisplay();
-    secondOp = previousValue.textContent.toString().slice(0, -2);
-  } else {
-    displayValue.textContent = firstOp;
-    currentOp = operator;
-    previousValue.textContent = `${firstOp} ${currentOp}`;
-    secondOp = previousValue.textContent.toString().slice(0, -2);
-    operate(currentOp, firstOp, secondOp);
-    firstOp = "";
-    displayValue.textContent = "";
-  }
+  } else if (memory !== "") {
+    memory = firstOperand;
+    displayValue.textContent = firstOperand;
+    currentOperation = operator;
+    previousValue.textContent = `${firstOperand} ${currentOperation}`;
+    displayValue.textContent = firstOperand;
+    operate(currentOperation, secondOperand, memory);
+    firstOperand = "";
+  } /* else {
+    secondOperand = firstOperand;
+    displayValue.textContent = firstOperand;
+    currentOperation = operator;
+    previousValue.textContent = `${firstOperand} ${currentOperation}`;
+    firstOperand = "";
+    displayValue.textContent = firstOperand;
+    shouldClearDisplay = true;
+    resetDisplay();
+  } */
 }
 
 // Actual calculator functions that brings all the inputs together
-function eval() {
-  operate(currentOp, firstOp, secondOp);
-}
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
-  firstOp = a + b;
-  displayValue.textContent = firstOp;
+  firstOperand = a + b;
+  displayValue.textContent = firstOperand;
 }
 function subtract(a, b) {
-  firstOp = a - b;
-  displayValue.textContent = firstOp;
+  firstOperand = a - b;
+  displayValue.textContent = firstOperand;
 }
 function divide(a, b) {
   if (b == 0) {
-    alert(`ERROR: Cannot divide by zero.`);
+    alert(`ERROR: Cannot divide by zero. Cosmic implosion imminent.`);
   } else {
-    firstOp = a / b;
-    displayValue.textContent = firstOp;
+    firstOperand = a / b;
+    displayValue.textContent = firstOperand;
   }
 }
 function multiply(a, b) {
-  firstOp = a * b;
-  displayValue.textContent = firstOp;
+  firstOperand = a * b;
+  displayValue.textContent = firstOperand;
 }
-//detects the operator and adds/subtracts
+//detects the operator and perfroms operations
 function operate(operator, a, b) {
   a = Number(a);
   b = Number(b);
