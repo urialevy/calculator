@@ -1,134 +1,138 @@
 // defines buttons, sets up initial display value of 0
-let shouldClearDisplay = false;
+let shouldResetScreen = false;
 let firstOperand = "";
 let secondOperand = "";
-let memory = "";
 let currentOperation = null;
 
-const numButtons = document.querySelectorAll(".num");
+const numberButtons = document.querySelectorAll(".num");
 const operatorButtons = document.querySelectorAll(".operator");
 const returnButton = document.getElementById("finish");
 const clearButton = document.getElementById("clear");
 const deleteButton = document.getElementById("delete");
-var displayValue = document.getElementById("result");
-let previousValue = document.getElementById("previous");
-displayValue.textContent = firstOperand;
+const pointButton = document.getElementById("point");
+var currentOperationScreen = document.getElementById("result");
+let lastOperationScreen = document.getElementById("previous");
+currentOperationScreen.textContent = firstOperand;
 
-//Capture keystrokes and presses, update display
-window.addEventListener("keydown", input);
-
-function input(e) {
-  if (e.key >= 0 && e.key <= 9) populateNum(e.key);
-  if (e.key === "Escape") reset();
-  if (e.key === "Backspace") deleteNumber();
-  if (e.key === "=" || e.key === "Enter")
-    operate(currentOperation, secondOperand, firstOperand);
-  if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
-    startOperate(e.key);
-}
-
-// updates number display when input is registered
-function populateNum(n) {
-  if (displayValue.textContent == "0" || shouldClearDisplay) {
-    resetDisplay();
-    firstOperand += n;
-    displayValue.textContent = firstOperand;
-  } else {
-    firstOperand += n;
-    displayValue.textContent = firstOperand;
-  }
-}
-
-//clear and delete buttons
-clearButton.addEventListener("click", reset);
+// captures keystroke input
+window.addEventListener("keydown", handleKeyboardInput);
+returnButton.addEventListener("click", evaluate);
+clearButton.addEventListener("click", clear);
 deleteButton.addEventListener("click", deleteNumber);
+pointButton.addEventListener("click", appendPoint);
 
-function reset() {
-  displayValue.textContent = "";
-  previousValue.textContent = "";
-  shouldClearDisplay = false;
+// captures click input
+numberButtons.forEach((button) =>
+  button.addEventListener("click", () => appendNumber(button.textContent))
+);
+operatorButtons.forEach((button) =>
+  button.addEventListener("click", () => setOperation(button.textContent))
+);
+
+// adds number to display
+function appendNumber(number) {
+  if (currentOperationScreen.textContent === "0" || shouldResetScreen)
+    resetScreen();
+  currentOperationScreen.textContent += number;
+}
+
+function resetScreen() {
+  currentOperationScreen.textContent = "";
+  shouldResetScreen = false;
+}
+
+function clear() {
+  currentOperationScreen.textContent = "0";
+  lastOperationScreen.textContent = "";
   firstOperand = "";
   secondOperand = "";
-  memory = "";
   currentOperation = null;
 }
 
+function appendPoint() {
+  if (shouldResetScreen) resetScreen();
+  if (currentOperationScreen.textContent === "")
+    currentOperationScreen.textContent = "0";
+  if (currentOperationScreen.textContent.includes(".")) return;
+  currentOperationScreen.textContent += ".";
+}
 function deleteNumber() {
-  firstOperand = firstOperand.toString().slice(0, -1);
-  displayValue.textContent = firstOperand;
+  currentOperationScreen.textContent = currentOperationScreen.textContent
+    .toString()
+    .slice(0, -1);
 }
-
-// only resets the display
-function resetDisplay() {
-  firstOperand = "";
-  displayValue.textContent = "";
-  shouldClearDisplay = false;
+function setOperation(operator) {
+  if (currentOperation !== null) evaluate();
+  firstOperand = currentOperationScreen.textContent;
+  currentOperation = operator;
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation}`;
+  shouldResetScreen = true;
 }
-
-// stores values once non-enter operator key is pressed
-function startOperate(operator) {
-  if (secondOperand === "") {
-    displayValue.textContent = firstOperand;
-    secondOperand = firstOperand;
-    currentOperation = operator;
-    memory = firstOperand;
-    previousValue.textContent = `${firstOperand} ${currentOperation}`;
-    shouldClearDisplay = true;
-    resetDisplay();
-  } else if (memory !== "") {
-    memory = firstOperand;
-    displayValue.textContent = firstOperand;
-    currentOperation = operator;
-    previousValue.textContent = `${firstOperand} ${currentOperation}`;
-    displayValue.textContent = firstOperand;
-    operate(currentOperation, secondOperand, memory);
-    firstOperand = "";
-  } /* else {
-    secondOperand = firstOperand;
-    displayValue.textContent = firstOperand;
-    currentOperation = operator;
-    previousValue.textContent = `${firstOperand} ${currentOperation}`;
-    firstOperand = "";
-    displayValue.textContent = firstOperand;
-    shouldClearDisplay = true;
-    resetDisplay();
-  } */
-}
-
-// Actual calculator functions that brings all the inputs together
-
-// Calculator functions, does not allow to divide by zero.
-function add(a, b) {
-  firstOperand = a + b;
-  displayValue.textContent = firstOperand;
-}
-function subtract(a, b) {
-  firstOperand = a - b;
-  displayValue.textContent = firstOperand;
-}
-function divide(a, b) {
-  if (b == 0) {
-    alert(`ERROR: Cannot divide by zero. Cosmic implosion imminent.`);
-  } else {
-    firstOperand = a / b;
-    displayValue.textContent = firstOperand;
+function evaluate() {
+  if (currentOperation === null || shouldResetScreen) return;
+  if (currentOperation === "÷" && currentOperationScreen.textContent === "0") {
+    alert("Cannot divide by zero. Cosmic implosion imminent.");
+    return;
   }
+  secondOperand = currentOperationScreen.textContent;
+  currentOperationScreen.textContent = roundResult(
+    operate(currentOperation, firstOperand, secondOperand)
+  );
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`;
+  currentOperation = null;
 }
+
+function roundResult(number) {
+  return Math.round(number * 1000) / 1000;
+}
+
+function handleKeyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+  if (e.key === ".") appendPoint();
+  if (e.key === "=" || e.key === "Enter") evaluate();
+  if (e.key === "Backspace") deleteNumber();
+  if (e.key === "Escape") clear();
+  if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
+    setOperation(convertOperator(e.key));
+}
+
+function convertOperator(keyboardOperator) {
+  if (keyboardOperator === "/") return "÷";
+  if (keyboardOperator === "*") return "x";
+  if (keyboardOperator === "-") return "-";
+  if (keyboardOperator === "+") return "+";
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+function substract(a, b) {
+  return a - b;
+}
+
 function multiply(a, b) {
-  firstOperand = a * b;
-  displayValue.textContent = firstOperand;
+  return a * b;
 }
-//detects the operator and perfroms operations
+
+function divide(a, b) {
+  return a / b;
+}
+
 function operate(operator, a, b) {
   a = Number(a);
   b = Number(b);
-  if (operator == "+") {
-    add(a, b);
-  } else if (operator == "-") {
-    subtract(a, b);
-  } else if (operator == "/" || operator == "÷") {
-    divide(a, b);
-  } else if (operator == "*") {
-    multiply(a, b);
+  switch (operator) {
+    case "+":
+      return add(a, b);
+    case "-":
+      return substract(a, b);
+    case "x":
+      return multiply(a, b);
+    case "÷":
+      if (b === 0) return null;
+      else return divide(a, b);
+    default:
+      return null;
   }
 }
