@@ -1,5 +1,5 @@
 // defines buttons, sets up initial display value of 0
-let blankDisplay = true;
+let shouldClearDisplay = true;
 let firstOp = "";
 let secondOp = "";
 let currentOp = null;
@@ -26,10 +26,10 @@ function input(e) {
 }
 function populateNum(n) {
   {
-    if (blankDisplay) {
-      displayValue.textContent = "";
+    if (shouldClearDisplay) {
+      resetDisplay();
       firstOp += n;
-      blankDisplay = false;
+      shouldClearDisplay = false;
     } else {
       firstOp += n;
     }
@@ -44,12 +44,12 @@ deleteButton.addEventListener("click", deleteNumber);
 function resetDisplay() {
   firstOp = "";
   displayValue.textContent = "";
-  blankDisplay = true;
+  shouldClearDisplay = false;
 }
 function reset() {
   displayValue.textContent = "";
   previousValue.textContent = "";
-  blankDisplay = true;
+  shouldClearDisplay = false;
   firstOp = "";
   secondOp = "";
   currentOp = null;
@@ -74,7 +74,7 @@ function startOperate(operator) {
     previousValue.textContent = `${firstOp} ${currentOp}`;
     secondOp = previousValue.textContent.toString().slice(0, -2);
     operate(currentOp, firstOp, secondOp);
-    firstOp = 0;
+    firstOp = "";
     displayValue.textContent = "";
   }
 }
@@ -86,24 +86,24 @@ function eval() {
 
 // Calculator functions, does not allow to divide by zero.
 function add(a, b) {
-  displayValue.textContent = a + b;
   firstOp = a + b;
+  displayValue.textContent = firstOp;
 }
 function subtract(a, b) {
-  displayValue.textContent = a - b;
   firstOp = a - b;
+  displayValue.textContent = firstOp;
 }
 function divide(a, b) {
   if (b == 0) {
     alert(`ERROR: Cannot divide by zero.`);
   } else {
-    displayValue.textContent = a / b;
     firstOp = a / b;
+    displayValue.textContent = firstOp;
   }
 }
 function multiply(a, b) {
-  displayValue.textContent = a * b;
   firstOp = a * b;
+  displayValue.textContent = firstOp;
 }
 //detects the operator and adds/subtracts
 function operate(operator, a, b) {
